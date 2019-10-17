@@ -1,0 +1,15 @@
+﻿@model IEnumerable<JobApply.Models.JobOffer>
+
+@{
+    ViewData["Title"] = "Index";
+}
+
+<h2>List of Job Offers:</h2>
+
+<ul>
+    @foreach(var item in Model)
+    {
+        <li>@Html.ActionLink(item.JobTitle, "Details", new {  id=item.Id })</li>
+        
+    }
+</ul>
