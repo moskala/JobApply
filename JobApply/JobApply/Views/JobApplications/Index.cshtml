@@ -1,0 +1,46 @@
+﻿@model IEnumerable<JobApply.Models.UserApplicationsListViewModel>
+
+
+<table class="table">
+    <thead>
+        <tr>
+            <th>
+                @Html.DisplayNameFor(model => model.JobTitle)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.CompanyName)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Location)
+            </th>
+            <th>
+                Application details
+            </th>
+            <th>
+                Job offer details
+            </th>
+            <th></th>
+        </tr>
+    </thead>
+    <tbody>
+@foreach (var item in Model) {
+        <tr>
+            <td>
+                @Html.DisplayFor(modelItem => item.JobTitle)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.CompanyName)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Location)
+            </td>
+            <td>
+                @Html.ActionLink("Details", "Details", "JobApplications", new { id = item.ApplicationId })
+            </td>
+            <td>
+                @Html.ActionLink("Go to offer", "Details", "JobOffers", new { id = item.OfferId })
+            </td>
+        </tr>
+}
+    </tbody>
+</table>

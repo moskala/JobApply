@@ -1,0 +1,119 @@
+﻿@model JobApply.Models.JobOfferViewModel
+
+@{
+    ViewData["Title"] = "Details";
+}
+
+<h2>Details</h2>
+
+<div>
+    <h4>JobOffer</h4>
+    <hr />
+    <dl class="dl-horizontal">
+        <dt>
+            @Html.DisplayNameFor(model => model.JobTitle)
+        </dt>
+        <dd>
+            @Html.DisplayFor(model => model.JobTitle)
+        </dd>
+        <dt>
+            @Html.DisplayNameFor(model => model.CompanyName)
+        </dt>
+        <dd>
+            @Html.DisplayFor(model => model.CompanyName)
+        </dd>
+        <dt>
+            @Html.DisplayNameFor(model => model.JobDescription)
+        </dt>
+        <dd>
+            @Html.DisplayFor(model => model.JobDescription)
+        </dd>
+        <dt>
+            @Html.DisplayNameFor(model => model.ApplicationDeadline)
+        </dt>
+        <dd>
+            @Html.DisplayFor(model => model.ApplicationDeadline)
+        </dd>
+        <dt>
+            @Html.DisplayNameFor(model => model.WorkStartDate)
+        </dt>
+        <dd>
+            @Html.DisplayFor(model => model.WorkStartDate)
+        </dd>
+        <dt>
+            @Html.DisplayNameFor(model => model.Location)
+        </dt>
+        <dd>
+            @Html.DisplayFor(model => model.Location)
+        </dd>
+        <dt>
+            @Html.DisplayNameFor(model => model.SalaryFrom)
+        </dt>
+        <dd>
+            @Html.DisplayFor(model => model.SalaryFrom)
+        </dd>
+        <dt>
+            @Html.DisplayNameFor(model => model.SalaryTo)
+        </dt>
+        <dd>
+            @Html.DisplayFor(model => model.SalaryTo)
+        </dd>
+        <dt>
+            @Html.DisplayNameFor(model => model.SalaryDescription)
+        </dt>
+        <dd>
+            @Html.DisplayFor(model => model.SalaryDescription)
+        </dd>
+        <dt>
+            @Html.DisplayNameFor(model => model.ContractLength)
+        </dt>
+        <dd>
+            @Html.DisplayFor(model => model.ContractLength)
+        </dd>
+    </dl>
+</div>
+<div>
+    <button type="submit" onclick="location.href='@Url.Action("ApplyForOffer", "JobApplications", new { id = Model.Id})'">Apply Now</button>
+    <a asp-action="Edit" asp-route-id="@Model.Id">Edit</a> |
+    <a asp-action="Index">Back to List</a>
+</div>
+<table class="table">
+    <thead>
+        <tr>
+            <th>
+                First Name
+            </th>
+            <th>
+                Last Name
+            </th>
+            <th>
+                Phone Number
+            </th>
+            <th>
+                Email Address
+            </th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var item in Model.JobApplications)
+        {
+            <tr>
+                <td>
+                    @Html.DisplayFor(modelItem => item.FirstName)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.LastName)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.PhoneNumber)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.EmailAddress)
+                </td>
+                <td>
+                    @Html.ActionLink("Details", "Details", "JobApplications", new { id = item.Id})
+                </td>
+            </tr>
+        }
+    </tbody>
+</table>
