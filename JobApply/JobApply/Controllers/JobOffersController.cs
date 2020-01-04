@@ -127,28 +127,33 @@ namespace JobApply.Controllers
         }
 
         // GET: JobOffers/Delete/5
-        public async Task<IActionResult> Delete(int? id)
-        {
-            if (id == null)
-            {
-                return NotFound();
-            }
+        //public async Task<IActionResult> Delete(int? id)
+        //{
+        //    if (id == null)
+        //    {
+        //        return NotFound();
+        //    }
 
-            var jobOffer = await _context.JobOffers
-                .FirstOrDefaultAsync(m => m.Id == id);
-            if (jobOffer == null)
-            {
-                return NotFound();
-            }
-            JobOfferViewModel model = jobOffer;
-            return View(model);
-        }
+        //    var jobOffer = await _context.JobOffers
+        //        .FirstOrDefaultAsync(m => m.Id == id);
+        //    if (jobOffer == null)
+        //    {
+        //        return NotFound();
+        //    }
+        //    JobOfferViewModel model = jobOffer;
+        //    return View(model);
+        //}
 
         // POST: JobOffers/Delete/5
         [HttpPost, ActionName("Delete")]
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> DeleteConfirmed(int id)
         {
+            var applications = _context.JobApplications.Where(a => a.OfferId == id).ToArray();
+            for(int i = 0; i < applications.Length; ++i)
+            {
+                _context.JobApplications.Remove(applications[i]);
+            }
             var jobOffer = await _context.JobOffers.FindAsync(id);
             _context.JobOffers.Remove(jobOffer);
             await _context.SaveChangesAsync();
