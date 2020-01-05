@@ -22,7 +22,8 @@ namespace JobApply.Models
         [Required]
         [Display(Name = "Email Address")]
         public string EmailAddress { get; set; }
-        [Required]
+
+        [CheckedAgreement]
         [Display(Name = "Contact Aggrement")]
         public bool ContactAgreement { get; set; }
         [Display(Name = "CV File")]
@@ -38,6 +39,19 @@ namespace JobApply.Models
         [Display(Name = "Location")]
         public string Location { get; set; }
 
+        public class CheckedAgreement : ValidationAttribute
+        {
+            protected override ValidationResult IsValid(object value, ValidationContext validationContext)
+            {
+                bool agreement = (bool)value;
+                if (agreement)
+                {
+                    return ValidationResult.Success;
+                }
+
+                return new ValidationResult(ErrorMessage ?? "This agreement field is required");
+            }
+        }
 
         public static implicit operator JobApplication(JobApplicationViewModel vm)
         {

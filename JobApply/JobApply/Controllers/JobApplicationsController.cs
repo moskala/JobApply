@@ -89,7 +89,7 @@ namespace JobApply.Controllers
 
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> ApplyForOffer([Bind("OfferId,FirstName,LastName,PhoneNumber,EmailAddress,ContactAgreement,CvUrl")] JobApplicationViewModel application)
+        public async Task<IActionResult> ApplyForOffer([Bind("OfferId,JobTitle,CompanyName,Location,FirstName,LastName,PhoneNumber,EmailAddress,ContactAgreement,CvUrl")] JobApplicationViewModel application)
         {
             if (ModelState.IsValid)
             {
