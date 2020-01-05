@@ -25,7 +25,7 @@ namespace JobApply.Controllers
             var model = new List<JobOfferViewModel>();
             var jobOffers = await _context.JobOffers.ToListAsync();
             foreach(var offer in jobOffers)
-            {
+            {               
                 model.Add(offer);
             }
             return View(model);
