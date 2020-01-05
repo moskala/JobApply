@@ -1,6 +1,19 @@
-﻿@model IEnumerable<JobApply.Models.UserApplicationsListViewModel>
+﻿@model IEnumerable<JobApply.Models.JobApplicationViewModel>
 
+@{
+    ViewData["Title"] = "Applications";
+}
 
+<div class="row mb-2">
+    <div class="d-flex align-items-center py-2">
+        <h2 class="font-weight-bold mb-0">
+            Job Applications list:
+            <span class="badge badge-secondary ml-2">
+                @Model.Count()
+            </span>
+        </h2>
+    </div>
+</div>
 <table class="table">
     <thead>
         <tr>
@@ -23,24 +36,25 @@
         </tr>
     </thead>
     <tbody>
-@foreach (var item in Model) {
-        <tr>
-            <td>
-                @Html.DisplayFor(modelItem => item.JobTitle)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.CompanyName)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.Location)
-            </td>
-            <td>
-                @Html.ActionLink("Details", "Details", "JobApplications", new { id = item.ApplicationId })
-            </td>
-            <td>
-                @Html.ActionLink("Go to offer", "Details", "JobOffers", new { id = item.OfferId })
-            </td>
-        </tr>
-}
+        @foreach (var item in Model)
+        {
+            <tr>
+                <td>
+                    @Html.DisplayFor(modelItem => item.JobTitle)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.CompanyName)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Location)
+                </td>
+                <td>
+                    @Html.ActionLink("Details", "Details", "JobApplications", new { id = item.ApplicationId })
+                </td>
+                <td>
+                    @Html.ActionLink("Go to offer", "Details", "JobOffers", new { id = item.OfferId })
+                </td>
+            </tr>
+        }
     </tbody>
 </table>
