@@ -23,11 +23,11 @@ namespace JobApply.Controllers
         public async Task<IActionResult> Index()
         {
             var jobApplications = await _context.JobApplications.ToListAsync();
-            var applications = new List<UserApplicationsListViewModel>();
+            var applications = new List<JobApplicationViewModel>();
             foreach(var app in jobApplications)
             {
                 var jobOffer = await _context.JobOffers.FindAsync(app.OfferId);
-                applications.Add(new UserApplicationsListViewModel()
+                applications.Add(new JobApplicationViewModel()
                 {
                     OfferId = app.OfferId,
                     ApplicationId = app.Id,
@@ -53,8 +53,16 @@ namespace JobApply.Controllers
             {
                 return NotFound();
             }
-
-            return View(jobApplication);
+            JobApplicationViewModel model = jobApplication;
+            var jobOffer = await _context.JobOffers.FirstOrDefaultAsync(m => m.Id == model.OfferId);
+            if(jobOffer == null)
+            {
+                return NotFound();
+            }
+            model.JobTitle = jobOffer.JobTitle;
+            model.CompanyName = jobOffer.CompanyName;
+            model.Location = jobOffer.Location;           
+            return View(model);
         }
 
         public async Task<IActionResult> ApplyForOffer(int? id)
@@ -69,44 +77,32 @@ namespace JobApply.Controllers
             {
                 return NotFound();
             }
-            var newApplication = new JobApplication();
-            newApplication.OfferId = id.Value;
-            ViewData["JobTitle"] = $"Application for {jobOffer.JobTitle} in {jobOffer.CompanyName}";
-            return View(newApplication);
+            JobApplicationViewModel model = new JobApplicationViewModel()
+            {
+                OfferId = id.Value,
+                JobTitle = jobOffer.JobTitle,
+                CompanyName = jobOffer.CompanyName,
+                Location = jobOffer.Location
+            };
+            return View(model);
         }
 
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> ApplyForOffer([Bind("OfferId,FirstName,LastName,PhoneNumber,EmailAddress,ContactAgreement,CvUrl")] JobApplication jobApplication)
+        public async Task<IActionResult> ApplyForOffer([Bind("OfferId,FirstName,LastName,PhoneNumber,EmailAddress,ContactAgreement,CvUrl")] JobApplicationViewModel application)
         {
             if (ModelState.IsValid)
             {
+                JobApplication jobApplication = application;
+                application.Created = DateTime.Now;
                 _context.Add(jobApplication);
                 await _context.SaveChangesAsync();
                 return RedirectToAction(nameof(Index));
             }
             else
             {
-                return View(jobApplication);
+                return View(application);
             }       
-        }
-
-        // GET: JobApplications/Delete/5
-        public async Task<IActionResult> Delete(int? id)
-        {
-            if (id == null)
-            {
-                return NotFound();
-            }
-
-            var jobApplication = await _context.JobApplications
-                .FirstOrDefaultAsync(m => m.Id == id);
-            if (jobApplication == null)
-            {
-                return NotFound();
-            }
-
-            return View(jobApplication);
         }
 
         // POST: JobApplications/Delete/5

@@ -14,6 +14,7 @@ namespace JobApply.Models
         public string PhoneNumber { get; set; }
         public string EmailAddress { get; set; }
         public bool ContactAgreement { get; set; }
-        public string CvUrl { get; set; }       
+        public string CvUrl { get; set; }     
+        public DateTime Created { get; set; }
     }
 }
