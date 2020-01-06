@@ -172,5 +172,32 @@ namespace JobApply.Controllers
 
             return empData;
         }
+
+        [HttpGet]
+        public PagingJobOffersViewModel GetJobOffers(int OfferId, int pageNo = 1, int pageSize = 4)
+        {
+            int totalPage, totalRecord;
+            var jobOffers = _context.JobOffers.ToList();
+            var jobOffersView = new List<JobOfferViewModel>();
+            foreach (var offer in jobOffers)
+            {
+                JobOfferViewModel item = offer;
+                jobOffersView.Add(item);
+            }
+            totalRecord = jobOffersView.Count();
+            totalPage = (totalRecord / pageSize) + ((totalRecord % pageSize) > 0 ? 1 : 0);
+            var record = (from u in jobOffersView
+                          orderby u.Id
+                          select u).Skip((pageNo - 1) * pageSize).Take(pageSize).ToList();
+
+            PagingJobOffersViewModel data = new PagingJobOffersViewModel
+            {
+                JobOffers = record,
+                CurrentPage = pageNo,
+                TotalPage = totalPage,
+            };
+
+            return data;
+        }
     }
 }

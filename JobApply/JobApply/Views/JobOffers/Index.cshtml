@@ -4,7 +4,7 @@
     ViewData["Title"] = "JobOffers";
 }
 <div class="row mb-2">
-    <div class="col-md-10 d-flex align-items-center py-2">
+    <div class="col-md-9 d-flex align-items-center py-2">
         <h2 class="font-weight-bold mb-0">Job Offer List</h2>
         <div>
             <span class="badge badge-pill badge-primary align-top">
@@ -12,61 +12,22 @@
             </span>
         </div>
     </div>
-    <button class="btn btn-rounded btn-outline-primary col-md-2" data-toggle="modal" onclick="location.href='@Url.Action("Create", "JobOffers")'">
+    <button class="btn btn-rounded btn-outline-primary col-md-3 col-sm-5" data-toggle="modal" onclick="location.href='@Url.Action("Create", "JobOffers")'">
         <i class="fa fa-plus pr-3"></i>
         Add new job offer
     </button>
 </div>
+@if (Model.Count() == 0)
+{
+    <div class="alert alert-primary" role="alert">Temporarily, we don't have any available job offers.</div>
+}
+else
+{
+    <table class="table" id="pagingJobOffers">
+    </table>
+}
 
-<table class="table">
-    <thead>
-        <tr>
-            <th>
-                @Html.DisplayNameFor(model => model.JobTitle)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.CompanyName)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.Location)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.ApplicationDeadline)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.WorkStartDate)
-            </th>
-            <th></th>
-        </tr>
-    </thead>
-    <tbody>
-        @foreach (var item in Model)
-        {
-            <tr>
-                <td>
-                    <a asp-action="Details" asp-route-id="@item.Id">@item.JobTitle</a>
-                </td>
-                <td>
-                    @Html.DisplayFor(modelItem => item.CompanyName)
-                </td>
-                <td>
-                    @Html.DisplayFor(modelItem => item.Location)
-                </td>
-                <td>
-                    @Html.DisplayFor(modelItem => item.ApplicationDeadline)
-                </td>
-                <td>
-                    @Html.DisplayFor(modelItem => item.WorkStartDate)
-                </td>
-
-                <td>
-                    <a 
-                        href="@Url.Action("Edit", "JobOffers", new { id = item.Id })"
-                        class="text-primary">
-                        <i class="fa fa-edit" title="Edit"></i>
-                    </a>                    
-                </td>
-            </tr>
-        }
-    </tbody>
-</table>
+@section Scripts
+    {
+    <script src="@Url.Content("~/Scripts/pagingJobOffers.js")"></script>
+}

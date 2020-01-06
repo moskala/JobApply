@@ -6,7 +6,7 @@
     <members>
         <member name="M:JobApply.Controllers.JobApplicationsController.Index">
             <summary>
-            Gets list of applications.
+            Gets list of job applications.
             </summary>
             <returns></returns>
         </member>
