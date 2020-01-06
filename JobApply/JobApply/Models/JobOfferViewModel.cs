@@ -77,7 +77,7 @@ namespace JobApply.Models
                 SalaryFrom = vm.SalaryFrom,
                 SalaryTo = vm.SalaryTo,
                 SalaryDescription = vm.SalaryDescription,
-                ContractLength = vm.ContractLength,
+                ContractLength = vm.ContractLength,               
             };
         }
     }

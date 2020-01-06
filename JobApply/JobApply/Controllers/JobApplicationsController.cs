@@ -94,7 +94,7 @@ namespace JobApply.Controllers
             if (ModelState.IsValid)
             {
                 JobApplication jobApplication = application;
-                application.Created = DateTime.Now;
+                jobApplication.Created = DateTime.Now;
                 _context.Add(jobApplication);
                 await _context.SaveChangesAsync();
                 return RedirectToAction(nameof(Index));

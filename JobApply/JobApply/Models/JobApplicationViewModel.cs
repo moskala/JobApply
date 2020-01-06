@@ -84,5 +84,6 @@ namespace JobApply.Models
                 Created = vm.Created,
             };
         }
+
     }
 }

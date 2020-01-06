@@ -126,24 +126,6 @@ namespace JobApply.Controllers
             return View(jobOfferEdit);
         }
 
-        // GET: JobOffers/Delete/5
-        //public async Task<IActionResult> Delete(int? id)
-        //{
-        //    if (id == null)
-        //    {
-        //        return NotFound();
-        //    }
-
-        //    var jobOffer = await _context.JobOffers
-        //        .FirstOrDefaultAsync(m => m.Id == id);
-        //    if (jobOffer == null)
-        //    {
-        //        return NotFound();
-        //    }
-        //    JobOfferViewModel model = jobOffer;
-        //    return View(model);
-        //}
-
         // POST: JobOffers/Delete/5
         [HttpPost, ActionName("Delete")]
         [ValidateAntiForgeryToken]
@@ -163,6 +145,32 @@ namespace JobApply.Controllers
         private bool JobOfferExists(int id)
         {
             return _context.JobOffers.Any(e => e.Id == id);
+        }
+
+        [HttpGet]
+        public PagingJobApplicationsViewModel GetJobApplications(int OfferId, int pageNo = 1, int pageSize = 4)
+        {
+            int totalPage, totalRecord;
+            var applications = _context.JobApplications.ToList();
+            var applicationsList = new List<JobApplicationListViewModel>();
+            foreach(var app in applications)
+            {
+                JobApplicationListViewModel item = app;
+                applicationsList.Add(item);
+            }
+            totalRecord = applications.Count();
+            totalPage = (totalRecord / pageSize) + ((totalRecord % pageSize) > 0 ? 1 : 0);
+            var record = (from u in applicationsList
+                          orderby u.FirstName, u.LastName
+                          select u).Skip((pageNo - 1) * pageSize).Take(pageSize).ToList();
+
+            PagingJobApplicationsViewModel empData = new PagingJobApplicationsViewModel
+            {
+                JobApplications = record,
+                TotalPage = totalPage
+            };
+
+            return empData;
         }
     }
 }
