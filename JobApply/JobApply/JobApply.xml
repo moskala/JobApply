@@ -1,0 +1,45 @@
+<?xml version="1.0"?>
+<doc>
+    <assembly>
+        <name>JobApply</name>
+    </assembly>
+    <members>
+        <member name="M:JobApply.Controllers.JobApplicationsController.Index">
+            <summary>
+            Gets list of applications.
+            </summary>
+            <returns></returns>
+        </member>
+        <member name="M:JobApply.Controllers.JobApplicationsController.Details(System.Nullable{System.Int32})">
+            <summary>
+            Gets one job application and returns details view.
+            </summary>
+            <param name="id">Id of the Job Application Element</param>
+            <returns></returns>
+            
+        </member>
+        <member name="M:JobApply.Controllers.JobApplicationsController.ApplyForOffer(System.Nullable{System.Int32})">
+            <summary>
+            Gets new job apply form for chosen job offer. 
+            </summary>
+            <param name="id">Id of the Job Application Element</param>
+            <returns></returns>
+        </member>
+        <member name="M:JobApply.Controllers.JobApplicationsController.ApplyForOffer(JobApply.Models.JobApplicationViewModel)">
+            <summary>
+            Saves new job application to database. 
+            </summary>
+            <remarks>Backend model validation.</remarks>
+            <param name="application">Application form to save</param>
+            <returns></returns>
+        </member>
+        <member name="M:JobApply.Controllers.JobApplicationsController.DeleteConfirmed(System.Int32)">
+            <summary>
+            Deletes chosen job application.
+            </summary>
+            <param name="id"></param>
+            <remarks>Data deleted from database.</remarks>
+            <returns></returns>
+        </member>
+    </members>
+</doc>

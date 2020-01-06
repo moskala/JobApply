@@ -10,6 +10,7 @@ using JobApply.Models;
 
 namespace JobApply.Controllers
 {
+    [Route("JobApplications")]
     public class JobApplicationsController : Controller
     {
         private readonly DataContext _context;
@@ -19,7 +20,14 @@ namespace JobApply.Controllers
             _context = context;
         }
 
-        // GET: JobApplications
+        /// <summary>
+        /// Gets list of job applications.
+        /// </summary>
+        /// <returns></returns>
+        [Route("")]
+        [Route("Index")]
+        [Route("/")]
+        [HttpGet]       
         public async Task<IActionResult> Index()
         {
             var jobApplications = await _context.JobApplications.ToListAsync();
@@ -39,7 +47,14 @@ namespace JobApply.Controllers
             return View(applications);
         }
 
-        // GET: JobApplications/Details/5
+        /// <summary>
+        /// Gets one job application and returns details view.
+        /// </summary>
+        /// <param name="id">Id of the Job Application Element</param>
+        /// <returns></returns>
+        /// 
+        [Route("Details/{id}")]
+        [HttpGet]
         public async Task<IActionResult> Details(int? id)
         {
             if (id == null)
@@ -65,6 +80,13 @@ namespace JobApply.Controllers
             return View(model);
         }
 
+        /// <summary>
+        /// Gets new job apply form for chosen job offer. 
+        /// </summary>
+        /// <param name="id">Id of the Job Application Element</param>
+        /// <returns></returns>
+        [Route("ApplyForOffer/{id}")]
+        [HttpGet]
         public async Task<IActionResult> ApplyForOffer(int? id)
         {
             if (id == null)
@@ -87,6 +109,13 @@ namespace JobApply.Controllers
             return View(model);
         }
 
+        /// <summary>
+        /// Saves new job application to database. 
+        /// </summary>
+        /// <remarks>Backend model validation.</remarks>
+        /// <param name="application">Application form to save</param>
+        /// <returns></returns>
+        [Route("ApplyForOffer")]
         [HttpPost]
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> ApplyForOffer([Bind("OfferId,JobTitle,CompanyName,Location,FirstName,LastName,PhoneNumber,EmailAddress,ContactAgreement,CvUrl")] JobApplicationViewModel application)
@@ -105,7 +134,13 @@ namespace JobApply.Controllers
             }       
         }
 
-        // POST: JobApplications/Delete/5
+        /// <summary>
+        /// Deletes chosen job application.
+        /// </summary>
+        /// <param name="id"></param>
+        /// <remarks>Data deleted from database.</remarks>
+        /// <returns></returns>
+        [Route("Delete/{id}")]
         [HttpPost, ActionName("Delete")]
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> DeleteConfirmed(int id)
