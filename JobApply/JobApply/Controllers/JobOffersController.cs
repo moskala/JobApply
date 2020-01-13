@@ -20,7 +20,10 @@ namespace JobApply.Controllers
             _context = context;
         }
 
-        // GET: JobOffers
+        /// <summary>
+        /// Get list of job offers.
+        /// </summary>
+        /// <returns></returns>
         [Route("Index")]
         [HttpGet]
         public async Task<IActionResult> Index()
@@ -34,7 +37,12 @@ namespace JobApply.Controllers
             return View(model);
         }
 
-        [Route("Details")]
+        /// <summary>
+        /// Get one job offer
+        /// </summary>
+        /// <param name="id">Id of job offer</param>
+        /// <returns>Details view for job offer</returns>
+        [Route("Details/{id}")]
         [HttpGet]
         public IActionResult Details(int? id)
         {
@@ -55,7 +63,10 @@ namespace JobApply.Controllers
         }
 
 
-        // GET: JobOffers/Create
+        /// <summary>
+        /// Get form to create new job offer
+        /// </summary>
+        /// <returns>Form view</returns>
         [Route("Create")]
         [HttpGet]
         public IActionResult Create()
@@ -63,9 +74,11 @@ namespace JobApply.Controllers
             return View();
         }
 
-        // POST: JobOffers/Create
-        // To protect from overposting attacks, please enable the specific properties you want to bind to, for 
-        // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
+        /// <summary>
+        /// Post new job offer model. If model is valid it is saved to database.
+        /// </summary>
+        /// <param name="jobOfferCreate">Model with data for new job offer</param>
+        /// <returns></returns>
         [Route("Create")]
         [HttpPost]
         [ValidateAntiForgeryToken]
@@ -81,7 +94,11 @@ namespace JobApply.Controllers
             return View(jobOfferCreate);
         }
 
-        // GET: JobOffers/Edit/5
+        /// <summary>
+        /// Get action to load one job offer to edit form.
+        /// </summary>
+        /// <param name="id">Id of a job offer</param>
+        /// <returns>View with form to edit job offer</returns>
         [Route("Edit/{id}")]
         [HttpGet]
         public async Task<IActionResult> Edit(int? id)
@@ -100,9 +117,12 @@ namespace JobApply.Controllers
             return View(model);
         }
 
-        // POST: JobOffers/Edit/5
-        // To protect from overposting attacks, please enable the specific properties you want to bind to, for 
-        // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
+        /// <summary>
+        /// Post to update job offer. If model is valid data is saved to database. 
+        /// </summary>
+        /// <param name="id">Id of job offer</param>
+        /// <param name="jobOfferEdit">Model with data to save.</param>
+        /// <returns></returns>
         [Route("Edit/{id}")]
         [HttpPost]
         [ValidateAntiForgeryToken]
@@ -138,7 +158,11 @@ namespace JobApply.Controllers
             return View(jobOfferEdit);
         }
 
-        // POST: JobOffers/Delete/5
+        /// <summary>
+        /// Delete action for one job offer.
+        /// </summary>
+        /// <param name="id">Id of job offer to delete</param>
+        /// <returns></returns>
         [Route("Delete/{id}")]
         [HttpPost, ActionName("Delete")]
         [ValidateAntiForgeryToken]
@@ -155,12 +179,20 @@ namespace JobApply.Controllers
             return RedirectToAction(nameof(Index));
         }
 
+        [ApiExplorerSettings(IgnoreApi = true)]
         public bool JobOfferExists(int id)
         {
             if (id < 0) throw new ArgumentException("Id is smaller than 0");
             return _context.JobOffers.Any(e => e.Id == id);
         }
 
+        /// <summary>
+        /// Get method to load only small number of Job Applications for one job offer.
+        /// </summary>
+        /// <param name="OfferId">Id of job offer for applications</param>
+        /// <param name="pageNo">Number of current page to load, default 1</param>
+        /// <param name="pageSize">Number of element to load on current page, default 4</param>
+        /// <returns></returns>
         [Route("GetJobApplications")]
         [HttpGet]
         public PagingJobApplicationsViewModel GetJobApplications(int OfferId, int pageNo = 1, int pageSize = 4)
@@ -188,9 +220,15 @@ namespace JobApply.Controllers
             return empData;
         }
 
+        /// <summary>
+        /// Get method to load only small number of Job Offers.
+        /// </summary>
+        /// <param name="pageNo">Value of current page to load</param>
+        /// <param name="pageSize">Number of element to load on current page, default 4<</param>
+        /// <returns></returns>
         [Route("GetJobOffers")]
         [HttpGet]
-        public PagingJobOffersViewModel GetJobOffers(int OfferId, int pageNo = 1, int pageSize = 4)
+        public PagingJobOffersViewModel GetJobOffers(int pageNo = 1, int pageSize = 4)
         {
             int totalPage, totalRecord;
             var jobOffers = _context.JobOffers.ToList();
