@@ -10,32 +10,43 @@ namespace JobApply.Models
     public class JobApplicationViewModel
     {
         public int ApplicationId { get; set; }
+
         [Required]
+        [MinLength(5)]
         [Display(Name = "First Name")]
         public string FirstName { get; set; }
+
         [Required]
         [Display(Name = "Last Name")]
         public string LastName { get; set; }
+
         [Required]
+        [Phone]
         [Display(Name = "Phone Number")]
         public string PhoneNumber { get; set; }
+
         [Required]
+        [EmailAddress]
         [Display(Name = "Email Address")]
         public string EmailAddress { get; set; }
 
         [CheckedAgreement]
         [Display(Name = "Contact Aggrement")]
         public bool ContactAgreement { get; set; }
+
         [Display(Name = "CV File")]
         public string CvUrl { get; set; }
         public int OfferId { get; set; }
+
         [Display(Name = "Sent")]
         public DateTime Created { get; set; }
 
         [Display(Name = "Job Title")]
         public string JobTitle { get; set; }
+
         [Display(Name = "Company Name")]
         public string CompanyName { get; set; }
+
         [Display(Name = "Location")]
         public string Location { get; set; }
 

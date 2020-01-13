@@ -10,36 +10,46 @@ namespace JobApply.Models
     {
         public int Id { get; set; }
 
+        [Required]
         [Display(Name = "Job Title")]
         public string JobTitle { get; set; }
 
+        [Required]
         [Display(Name = "Company Name")]
         public string CompanyName { get; set; }
 
+        [Required]
         [Display(Name = "Job Description")]
         public string JobDescription { get; set; }
 
+        [Required]
         [CheckDate]
         [Display(Name = "Application Deadline")]
         public DateTime ApplicationDeadline { get; set; }
 
+        [Required]
         [Display(Name = "Work start date")]
         public DateTime WorkStartDate { get; set; }
 
+        [Required]
         [Display(Name = "Location")]
         public string Location { get; set; }
 
+        [Required]
         [Range(1, int.MaxValue, ErrorMessage = "Salary must be greater than zero")]
         [Display(Name = "Salary from")]
         public int SalaryFrom { get; set; }
 
+        [Required]
         [SalaryGreaterThan("SalaryFrom")]
         [Display(Name = "Salary to")]
         public int SalaryTo { get; set; }
 
+        [Required]
         [Display(Name = "Salary Description")]
         public string SalaryDescription { get; set; }
 
+        [Required]
         [Display(Name = "Contract Length")]
         public string ContractLength { get; set; }
         public List<JobApplication> JobApplications { get; set; } = new List<JobApplication>();
@@ -104,7 +114,7 @@ namespace JobApply.Models
                 return new ValidationResult(ErrorMessage);
 
             return ValidationResult.Success;
-        }
+        }       
     }
     public class CheckDateAttribute : ValidationAttribute
     {
@@ -120,4 +130,5 @@ namespace JobApply.Models
         }
 
     }
+  
 }
