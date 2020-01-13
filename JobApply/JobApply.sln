@@ -3,7 +3,11 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio 15
 VisualStudioVersion = 15.0.28307.539
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "JobApply", "JobApply\JobApply.csproj", "{7F5FF3AA-6837-4E97-8299-46F3BB39E4DD}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "JobApply", "JobApply\JobApply.csproj", "{7F5FF3AA-6837-4E97-8299-46F3BB39E4DD}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "JobApply.UnitTests", "JobApply.UnitTests\JobApply.UnitTests.csproj", "{F427865E-7D83-47B0-8715-6220CAE23947}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "JobApply.IntegrationTests", "JobApply.IntegrationTests\JobApply.IntegrationTests.csproj", "{1D7A1C65-8884-44B4-81B4-BDD5AFD0B277}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -15,6 +19,14 @@ Global
 		{7F5FF3AA-6837-4E97-8299-46F3BB39E4DD}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{7F5FF3AA-6837-4E97-8299-46F3BB39E4DD}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{7F5FF3AA-6837-4E97-8299-46F3BB39E4DD}.Release|Any CPU.Build.0 = Release|Any CPU
+		{F427865E-7D83-47B0-8715-6220CAE23947}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{F427865E-7D83-47B0-8715-6220CAE23947}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{F427865E-7D83-47B0-8715-6220CAE23947}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{F427865E-7D83-47B0-8715-6220CAE23947}.Release|Any CPU.Build.0 = Release|Any CPU
+		{1D7A1C65-8884-44B4-81B4-BDD5AFD0B277}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{1D7A1C65-8884-44B4-81B4-BDD5AFD0B277}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{1D7A1C65-8884-44B4-81B4-BDD5AFD0B277}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{1D7A1C65-8884-44B4-81B4-BDD5AFD0B277}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

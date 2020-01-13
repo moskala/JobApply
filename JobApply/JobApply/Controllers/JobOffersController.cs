@@ -10,6 +10,7 @@ using JobApply.Models;
 
 namespace JobApply.Controllers
 {
+    [Route("JobOffers")]
     public class JobOffersController : Controller
     {
         private readonly DataContext _context;
@@ -20,6 +21,8 @@ namespace JobApply.Controllers
         }
 
         // GET: JobOffers
+        [Route("Index")]
+        [HttpGet]
         public async Task<IActionResult> Index()
         {
             var model = new List<JobOfferViewModel>();
@@ -30,6 +33,9 @@ namespace JobApply.Controllers
             }
             return View(model);
         }
+
+        [Route("Details")]
+        [HttpGet]
         public IActionResult Details(int? id)
         {
             if (id == null)
@@ -50,6 +56,8 @@ namespace JobApply.Controllers
 
 
         // GET: JobOffers/Create
+        [Route("Create")]
+        [HttpGet]
         public IActionResult Create()
         {
             return View();
@@ -58,6 +66,7 @@ namespace JobApply.Controllers
         // POST: JobOffers/Create
         // To protect from overposting attacks, please enable the specific properties you want to bind to, for 
         // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
+        [Route("Create")]
         [HttpPost]
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> Create([Bind("Id,JobTitle,CompanyName,JobDescription,ApplicationDeadline,WorkStartDate,Location,SalaryFrom,SalaryTo,SalaryDescription,ContractLength")] JobOfferViewModel jobOfferCreate)
@@ -73,6 +82,8 @@ namespace JobApply.Controllers
         }
 
         // GET: JobOffers/Edit/5
+        [Route("Edit/{id}")]
+        [HttpGet]
         public async Task<IActionResult> Edit(int? id)
         {
             if (id == null)
@@ -92,6 +103,7 @@ namespace JobApply.Controllers
         // POST: JobOffers/Edit/5
         // To protect from overposting attacks, please enable the specific properties you want to bind to, for 
         // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
+        [Route("Edit/{id}")]
         [HttpPost]
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> Edit(int id, [Bind("Id,JobTitle,CompanyName,JobDescription,ApplicationDeadline,WorkStartDate,Location,SalaryFrom,SalaryTo,SalaryDescription,ContractLength")] JobOfferViewModel jobOfferEdit)
@@ -127,6 +139,7 @@ namespace JobApply.Controllers
         }
 
         // POST: JobOffers/Delete/5
+        [Route("Delete/{id}")]
         [HttpPost, ActionName("Delete")]
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> DeleteConfirmed(int id)
@@ -142,11 +155,13 @@ namespace JobApply.Controllers
             return RedirectToAction(nameof(Index));
         }
 
-        private bool JobOfferExists(int id)
+        public bool JobOfferExists(int id)
         {
+            if (id < 0) throw new ArgumentException("Id is smaller than 0");
             return _context.JobOffers.Any(e => e.Id == id);
         }
 
+        [Route("GetJobApplications")]
         [HttpGet]
         public PagingJobApplicationsViewModel GetJobApplications(int OfferId, int pageNo = 1, int pageSize = 4)
         {
@@ -173,6 +188,7 @@ namespace JobApply.Controllers
             return empData;
         }
 
+        [Route("GetJobOffers")]
         [HttpGet]
         public PagingJobOffersViewModel GetJobOffers(int OfferId, int pageNo = 1, int pageSize = 4)
         {
