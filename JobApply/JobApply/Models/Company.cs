@@ -50,7 +50,7 @@ namespace JobApply.Models
                 City = model.City,
                 Country = model.Country,
                 ContactEmail = model.ContactEmail,
-                FoundationDate = model.FoundationDate
+                FoundationDate = model.FoundationDate,                
             };
         }
 

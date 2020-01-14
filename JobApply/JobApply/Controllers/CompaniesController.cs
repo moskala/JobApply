@@ -7,6 +7,7 @@ using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
 using JobApply.EntityFramework;
 using JobApply.Models;
+using Microsoft.AspNetCore.Authorization;
 
 namespace JobApply.Controllers
 {
@@ -22,7 +23,14 @@ namespace JobApply.Controllers
         // GET: Companies
         public async Task<IActionResult> Index()
         {
-            return View(await _context.Companies.ToListAsync());
+            var companies = await _context.Companies.ToListAsync();
+            List<Company> model = new List<Company>();
+            foreach(var c in companies)
+            {
+                Company company = c;
+                model.Add(c);
+            }
+            return View(model);
         }
 
         // GET: Companies/Details/5
@@ -39,11 +47,13 @@ namespace JobApply.Controllers
             {
                 return NotFound();
             }
+            Company model = company;
 
-            return View(company);
+            return View(model);
         }
 
         // GET: Companies/Create
+        [Authorize]
         public IActionResult Create()
         {
             return View();
@@ -52,13 +62,15 @@ namespace JobApply.Controllers
         // POST: Companies/Create
         // To protect from overposting attacks, please enable the specific properties you want to bind to, for 
         // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
+        [Authorize]
         [HttpPost]
         [ValidateAntiForgeryToken]
         public ActionResult Create([FromBody] Company company)
         {
             if (ModelState.IsValid)
             {
-                _context.Add(company);
+                CompanyModel companyToSave = company;
+                _context.Add(companyToSave);
                 _context.SaveChanges();
                 //await _context.SaveChangesAsync();
                 //return new JsonResult( new { data = true });
@@ -69,6 +81,7 @@ namespace JobApply.Controllers
         }
 
         // GET: Companies/Edit/5
+        [Authorize]
         public async Task<IActionResult> Edit(int? id)
         {
             if (id == null)
@@ -81,12 +94,15 @@ namespace JobApply.Controllers
             {
                 return NotFound();
             }
-            return View(company);
+            Company model = company;
+
+            return View(model);
         }
 
         // POST: Companies/Edit/5
         // To protect from overposting attacks, please enable the specific properties you want to bind to, for 
         // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
+        [Authorize]
         [HttpPost]
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> Edit(int id, [Bind("Id,Name,City,Country,ContactEmail,foundationDate")] Company company)
@@ -100,7 +116,8 @@ namespace JobApply.Controllers
             {
                 try
                 {
-                    _context.Update(company);
+                    CompanyModel companyModel = company;
+                    _context.Update(companyModel);
                     await _context.SaveChangesAsync();
                 }
                 catch (DbUpdateConcurrencyException)
@@ -120,6 +137,7 @@ namespace JobApply.Controllers
         }
 
         // GET: Companies/Delete/5
+        [Authorize]
         public async Task<IActionResult> Delete(int? id)
         {
             if (id == null)
@@ -133,11 +151,12 @@ namespace JobApply.Controllers
             {
                 return NotFound();
             }
-
-            return View(company);
+            Company model = company;
+            return View(model);
         }
 
         // POST: Companies/Delete/5
+        [Authorize]
         [HttpPost, ActionName("Delete")]
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> DeleteConfirmed(int id)
