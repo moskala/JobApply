@@ -54,15 +54,18 @@ namespace JobApply.Controllers
         // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Create([Bind("Id,Name")] Company company)
+        public ActionResult Create([FromBody] Company company)
         {
             if (ModelState.IsValid)
             {
                 _context.Add(company);
-                await _context.SaveChangesAsync();
-                return RedirectToAction(nameof(Index));
+                _context.SaveChanges();
+                //await _context.SaveChangesAsync();
+                //return new JsonResult( new { data = true });
+                return Json(true);
             }
-            return View(company);
+            //return new JsonResult(new { data = false });
+            return Json(false);
         }
 
         // GET: Companies/Edit/5
@@ -86,7 +89,7 @@ namespace JobApply.Controllers
         // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Edit(int id, [Bind("Id,Name")] Company company)
+        public async Task<IActionResult> Edit(int id, [Bind("Id,Name,City,Country,ContactEmail,foundationDate")] Company company)
         {
             if (id != company.Id)
             {
