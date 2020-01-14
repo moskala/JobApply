@@ -25,10 +25,12 @@ namespace JobApply.Models
         [Required]
         [CheckDate]
         [Display(Name = "Application Deadline")]
+        [DisplayFormat(DataFormatString = "{0:dd MMM yyyy}")]
         public DateTime ApplicationDeadline { get; set; }
 
         [Required]
         [Display(Name = "Work start date")]
+        [DisplayFormat(DataFormatString = "{0:dd MMM yyyy}")]
         public DateTime WorkStartDate { get; set; }
 
         [Required]

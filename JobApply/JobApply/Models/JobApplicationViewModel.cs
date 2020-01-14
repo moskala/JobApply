@@ -1,4 +1,5 @@
 ﻿using JobApply.EntityFramework;
+using Microsoft.AspNetCore.Mvc;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
@@ -7,6 +8,7 @@ using System.Threading.Tasks;
 
 namespace JobApply.Models
 {
+    [BindProperties]
     public class JobApplicationViewModel
     {
         public int ApplicationId { get; set; }
@@ -39,6 +41,7 @@ namespace JobApply.Models
         public int OfferId { get; set; }
 
         [Display(Name = "Sent")]
+        [DisplayFormat(DataFormatString = "{0:dd MMM yyyy}")]
         public DateTime Created { get; set; }
 
         [Display(Name = "Job Title")]

@@ -24,7 +24,7 @@ namespace JobApply.Models
         [EmailAddress]
         public string ContactEmail { get; set;}
 
-        [Display(Name = "Founded")]
+        [Display(Name = "Foundation date")]
         [DisplayFormat(DataFormatString = "{0:dd MMM yyyy}")]
         public DateTime FoundationDate { get; set; }
 
@@ -55,19 +55,5 @@ namespace JobApply.Models
         }
 
     }
-
-    public class CompanyModel
-    {
-        public int Id { get; set; }
-        public string Name { get; set; }
-        [Display(Name = "Office city")]
-        public string City { get; set; }
-        public string Country { get; set; }
-        public string ContactEmail { get; set; }
-        public DateTime FoundationDate { get; set; }      
-
-    }
-
-
     
 }
