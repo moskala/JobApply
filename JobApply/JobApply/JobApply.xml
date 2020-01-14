@@ -41,5 +41,63 @@
             <remarks>Data deleted from database.</remarks>
             <returns></returns>
         </member>
+        <member name="M:JobApply.Controllers.JobOffersController.Index">
+            <summary>
+            Get list of job offers.
+            </summary>
+            <returns></returns>
+        </member>
+        <member name="M:JobApply.Controllers.JobOffersController.Details(System.Nullable{System.Int32})">
+            <summary>
+            Get one job offer
+            </summary>
+            <param name="id">Id of job offer</param>
+            <returns>Details view for job offer</returns>
+        </member>
+        <member name="M:JobApply.Controllers.JobOffersController.Create">
+            <summary>
+            Get form to create new job offer
+            </summary>
+            <returns>Form view</returns>
+        </member>
+        <member name="M:JobApply.Controllers.JobOffersController.Create(JobApply.Models.JobOfferViewModel)">
+            <summary>
+            Post new job offer model. If model is valid it is saved to database.
+            </summary>
+            <param name="jobOfferCreate">Model with data for new job offer</param>
+            <returns></returns>
+        </member>
+        <member name="M:JobApply.Controllers.JobOffersController.Edit(System.Nullable{System.Int32})">
+            <summary>
+            Get action to load one job offer to edit form.
+            </summary>
+            <param name="id">Id of a job offer</param>
+            <returns>View with form to edit job offer</returns>
+        </member>
+        <member name="M:JobApply.Controllers.JobOffersController.Edit(System.Int32,JobApply.Models.JobOfferViewModel)">
+            <summary>
+            Post to update job offer. If model is valid data is saved to database. 
+            </summary>
+            <param name="id">Id of job offer</param>
+            <param name="jobOfferEdit">Model with data to save.</param>
+            <returns></returns>
+        </member>
+        <member name="M:JobApply.Controllers.JobOffersController.DeleteConfirmed(System.Int32)">
+            <summary>
+            Delete action for one job offer.
+            </summary>
+            <param name="id">Id of job offer to delete</param>
+            <returns></returns>
+        </member>
+        <member name="M:JobApply.Controllers.JobOffersController.GetJobApplications(System.Int32,System.Int32,System.Int32)">
+            <summary>
+            Get method to load only small number of Job Applications for one job offer.
+            </summary>
+            <param name="OfferId">Id of job offer for applications</param>
+            <param name="pageNo">Number of current page to load, default 1</param>
+            <param name="pageSize">Number of element to load on current page, default 4</param>
+            <returns></returns>
+        </member>
+        <!-- Badly formed XML comment ignored for member "M:JobApply.Controllers.JobOffersController.GetJobOffers(System.Int32,System.Int32)" -->
     </members>
 </doc>
