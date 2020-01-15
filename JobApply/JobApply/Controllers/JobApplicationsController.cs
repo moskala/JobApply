@@ -8,6 +8,9 @@ using Microsoft.EntityFrameworkCore;
 using JobApply.EntityFramework;
 using JobApply.Models;
 using Microsoft.AspNetCore.Authorization;
+using SendGrid.Helpers.Mail;
+using SendGrid;
+using Microsoft.Extensions.Configuration;
 
 namespace JobApply.Controllers
 {
@@ -15,10 +18,12 @@ namespace JobApply.Controllers
     public class JobApplicationsController : Controller
     {
         private readonly DataContext _context;
+        private string apiKey;
 
-        public JobApplicationsController(DataContext context)
+        public JobApplicationsController(DataContext context, IConfiguration config)
         {
             _context = context;
+            apiKey = config.GetSection("EMAIL_KEY").Value;
         }
 
         /// <summary>
@@ -116,23 +121,21 @@ namespace JobApply.Controllers
         [Route("ApplyForOffer/{id}")]
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> ApplyForOffer([Bind("OfferId,JobTitle,CompanyName,Location,FirstName,LastName,PhoneNumber,EmailAddress,ContactAgreement,CvUrl")] JobApplicationViewModel application)
-        {
-            if (!TryValidateModel(application, nameof(JobApplicationViewModel)))
-            {
-                return View(application.OfferId);
-            }
+        public async Task<IActionResult> ApplyForOffer(int id, [Bind("OfferId,JobTitle,CompanyName,Location,FirstName,LastName,PhoneNumber,EmailAddress,ContactAgreement,CvUrl")] JobApplicationViewModel application)
+        {          
             if (ModelState.IsValid)
             {
                 JobApplication jobApplication = application;
                 jobApplication.Created = DateTime.Now;
                 _context.Add(jobApplication);
                 await _context.SaveChangesAsync();
-                return RedirectToAction(nameof(Index));
+                await SendMail(jobApplication.EmailAddress, jobApplication.FirstName, jobApplication.LastName);
+                if (User.Identity.IsAuthenticated) return RedirectToAction(nameof(Index));
+                else return RedirectToAction("Index", "JobOffers");
             }
             else
             {
-                return View(application.OfferId);
+                return View(application);
             }       
         }
 
@@ -179,6 +182,19 @@ namespace JobApply.Controllers
                 model.Add(vm);
             }
             return View("Index", model);
+        }
+
+        [ApiExplorerSettings(IgnoreApi = true)]
+        public async Task SendMail(string email, string firstName, string lastName)
+        {
+            var msg = new SendGridMessage();
+            msg.SetFrom(new EmailAddress("hrmanagement@hr.com", "HRManagement Team"));
+            msg.AddTo(new EmailAddress(email, firstName + " " + lastName));
+            msg.SetSubject("Application sent, confirmation");
+            msg.AddContent(MimeType.Text, "Hello, your application was sent correctly");
+
+            var client = new SendGridClient(apiKey);
+            var resposne = await client.SendEmailAsync(msg);
         }
     }
 }

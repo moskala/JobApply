@@ -25,7 +25,7 @@
             <param name="id">Id of the Job Application Element</param>
             <returns></returns>
         </member>
-        <member name="M:JobApply.Controllers.JobApplicationsController.ApplyForOffer(JobApply.Models.JobApplicationViewModel)">
+        <member name="M:JobApply.Controllers.JobApplicationsController.ApplyForOffer(System.Int32,JobApply.Models.JobApplicationViewModel)">
             <summary>
             Saves new job application to database. 
             </summary>
@@ -40,6 +40,13 @@
             <param name="id"></param>
             <remarks>Data deleted from database.</remarks>
             <returns></returns>
+        </member>
+        <member name="M:JobApply.Controllers.JobApplicationsController.FilterJobApplications(System.String)">
+            <summary>
+            Filter all job application by email.
+            </summary>
+            <param name="EmailAddress">string which emails shoud cointains</param>
+            <returns>Collection of job applications</returns>
         </member>
         <member name="M:JobApply.Controllers.JobOffersController.Index">
             <summary>
