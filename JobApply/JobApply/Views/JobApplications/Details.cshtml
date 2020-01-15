@@ -94,7 +94,7 @@
                     <i class="fa fa-chevron-left" aria-hidden="true"></i>
                     Cancel
                 </button>
-                @using (Html.BeginForm("Delete", "JobApplications", new { id = Model.ApplicationId }, FormMethod.Post, null, new { style = "display:inline;" }))
+                @using (Html.BeginForm("Delete", "JobApplications", new { id = Model.Id }, FormMethod.Post, null, new { style = "display:inline;" }))
                 {
                     @Html.AntiForgeryToken()
                     <button type="submit" class="btn btn-rounded btn-danger">

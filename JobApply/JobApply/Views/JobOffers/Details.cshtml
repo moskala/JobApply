@@ -5,10 +5,13 @@
 }
 <div class="d-flex">
     <h2>Job offer's details</h2>
-    <a href="@Url.Action("Edit", "JobOffers", new { id = Model.Id })"
-       class="text-primary">
-        <i class="fa fa-edit" title="Edit"></i>
-    </a>
+    @if (User.Identity.IsAuthenticated)
+    {
+        <a href="@Url.Action("Edit", "JobOffers", new { id = Model.Id })"
+           class="text-primary">
+            <i class="fa fa-edit" title="Edit"></i>
+        </a>
+    }
 </div>
 
 <div>
@@ -87,22 +90,30 @@
         <i class="fa fa-chevron-right" aria-hidden="true"></i>
         Apply Now
     </button>
-    <button class="btn btn-rounded btn-danger mr-2"
-            data-toggle="modal"
-            data-target="#confirm-delete">
-        <i class="fa fa-trash" aria-hidden="true"></i>
-        Delete
-    </button>
+    @if (User.Identity.IsAuthenticated)
+    {
+        <button class="btn btn-rounded btn-danger mr-2"
+                data-toggle="modal"
+                data-target="#confirm-delete">
+            <i class="fa fa-trash" aria-hidden="true"></i>
+            Delete
+        </button>
+    }
 </div>
 
 <div class="mb-5">
-    <a asp-action="Index">Go to Job Offers List</a>
+    <a asp-action="Index">Go back to Job Offers List</a>
 </div>
 
-<div class="container-fluid pl-0">
-    <h2>Applications for this offer: </h2>
-    <div id="pagingTable" />
-</div>
+@if (User.Identity.IsAuthenticated)
+{
+    <div class="container-fluid pl-0">
+        <h2>Applications for this offer: </h2>
+        <div id="pagingTable" />
+    </div>
+}
+
+
 
 
 <div class="modal fade" id="confirm-delete" tabindex="-1" role="dialog" aria-hidden="true">
@@ -140,6 +151,6 @@
 </div>
 
 @section Scripts
-{
+    {
     <script src="@Url.Content("~/Scripts/pagingTable.js")"></script>
 }

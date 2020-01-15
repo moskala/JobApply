@@ -73,7 +73,7 @@ namespace JobApply.UITests
             jobOffer.Click();
             Thread.Sleep(1000);
 
-            var applyNow = driver.FindElement(By.XPath("/html/body/div/div[3]/button[1]"));
+            var applyNow = driver.FindElement(By.XPath("/html/body/div/div[3]/button"));
             applyNow.Click();
             Thread.Sleep(1000);
 

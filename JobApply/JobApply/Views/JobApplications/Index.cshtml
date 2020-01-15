@@ -66,7 +66,7 @@
                 @Html.DisplayFor(modelItem => item.EmailAddress)
             </td>
             <td>
-                @Html.ActionLink("Details", "Details", "JobApplications", new { id = item.ApplicationId })
+                @Html.ActionLink("Details", "Details", "JobApplications", new { id = item.Id })
             </td>
             <td>
                 @Html.ActionLink("Go to offer", "Details", "JobOffers", new { id = item.OfferId })

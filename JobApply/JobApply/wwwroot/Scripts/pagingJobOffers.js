@@ -23,7 +23,7 @@ function fetchData(pageNo, dir) {
 function OnSuccess(data) {
 	var model = data;
 	var $tbody = $('<tbody/>');
-	var $thead = $('<thead/>').html("<tr><th>Job Title</th><th>Company Name</th><th>Location</th><th>Application Deadline</th><th></th></tr>");
+	var $thead = $('<thead/>').html("<tr><th>Job Title</th><th>Company Name</th><th>Location</th><th></th></tr>");
 	$('#pagingJobOffers').append($thead);
 	$.each(model.jobOffers, function (i, offer) {
 		var $row = $('<tr/>');
@@ -31,7 +31,7 @@ function OnSuccess(data) {
 		$row.append($('<td/>').html(detailsLink));
 		$row.append($('<td/>').html(offer.companyName));
 		$row.append($('<td/>').html(offer.location));
-		$row.append($('<td/>').html(offer.applicationDeadline));
+		//$row.append($('<td/>').html(offer.applicationDeadline));
 		var editLink = "<a href=/JobOffers/Edit/" + offer.id + " class='text-primary text-center'><i class='fa fa-edit' title='Edit'></i></a>";
 		$row.append($('<td/>').html(editLink));
 		$tbody.append($row);
