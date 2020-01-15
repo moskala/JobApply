@@ -3,8 +3,8 @@
 @{
     ViewData["Title"] = "JobOffers";
 }
-<div class="row mb-2">
-    <div class="col-md-9 d-flex align-items-center py-2">
+<div class="row mb-1">
+    <div class="col-md-4 d-flex align-items-center py-2">
         <h2 class="font-weight-bold mb-0">Job Offer List</h2>
         <div>
             <span class="badge badge-pill badge-primary align-top">
@@ -12,11 +12,16 @@
             </span>
         </div>
     </div>
-    <button class="btn btn-rounded btn-outline-primary col-md-3 col-sm-5" data-toggle="modal" onclick="location.href='@Url.Action("Create", "JobOffers")'">
-        <i class="fa fa-plus pr-3"></i>
-        Add new job offer
-    </button>
+    <div class="col-md-4"></div>
+    @if (User.Identity.IsAuthenticated)
+    {
+        <button class="btn btn-rounded btn-outline-primary col-md-4" data-toggle="modal" onclick="location.href='@Url.Action("Create", "JobOffers")'">
+            <i class="fa fa-plus pr-3"></i>
+            Add new job offer
+        </button>
+    }
 </div>
+
 @if (Model.Count() == 0)
 {
     <div class="alert alert-primary" role="alert">Temporarily, we don't have any available job offers.</div>
@@ -29,5 +34,5 @@ else
 
 @section Scripts
     {
-    <script src="@Url.Content("~/Scripts/pagingJobOffers.js")"></script>
+    <script src="@Url.Content("~/Scripts/pagingJobOffers.js")"></script>   
 }

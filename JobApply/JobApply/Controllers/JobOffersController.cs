@@ -7,6 +7,7 @@ using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
 using JobApply.EntityFramework;
 using JobApply.Models;
+using Microsoft.AspNetCore.Authorization;
 
 namespace JobApply.Controllers
 {
@@ -69,6 +70,7 @@ namespace JobApply.Controllers
         /// <returns>Form view</returns>
         [Route("Create")]
         [HttpGet]
+        [Authorize]
         public IActionResult Create()
         {
             return View();
@@ -82,6 +84,7 @@ namespace JobApply.Controllers
         [Route("Create")]
         [HttpPost]
         [ValidateAntiForgeryToken]
+        [Authorize]
         public async Task<IActionResult> Create([Bind("Id,JobTitle,CompanyName,JobDescription,ApplicationDeadline,WorkStartDate,Location,SalaryFrom,SalaryTo,SalaryDescription,ContractLength")] JobOfferViewModel jobOfferCreate)
         {
             if (ModelState.IsValid)
@@ -101,6 +104,7 @@ namespace JobApply.Controllers
         /// <returns>View with form to edit job offer</returns>
         [Route("Edit/{id}")]
         [HttpGet]
+        [Authorize]
         public async Task<IActionResult> Edit(int? id)
         {
             if (id == null)
@@ -126,6 +130,7 @@ namespace JobApply.Controllers
         [Route("Edit/{id}")]
         [HttpPost]
         [ValidateAntiForgeryToken]
+        [Authorize]
         public async Task<IActionResult> Edit(int id, [Bind("Id,JobTitle,CompanyName,JobDescription,ApplicationDeadline,WorkStartDate,Location,SalaryFrom,SalaryTo,SalaryDescription,ContractLength")] JobOfferViewModel jobOfferEdit)
         {
             if (id != jobOfferEdit.Id)
@@ -166,6 +171,7 @@ namespace JobApply.Controllers
         [Route("Delete/{id}")]
         [HttpPost, ActionName("Delete")]
         [ValidateAntiForgeryToken]
+        [Authorize]
         public async Task<IActionResult> DeleteConfirmed(int id)
         {
             var applications = _context.JobApplications.Where(a => a.OfferId == id).ToArray();
@@ -253,5 +259,6 @@ namespace JobApply.Controllers
 
             return data;
         }
+       
     }
 }

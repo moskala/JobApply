@@ -7,6 +7,7 @@ using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
 using JobApply.EntityFramework;
 using JobApply.Models;
+using Microsoft.AspNetCore.Authorization;
 
 namespace JobApply.Controllers
 {
@@ -24,10 +25,9 @@ namespace JobApply.Controllers
         /// Gets list of job applications.
         /// </summary>
         /// <returns></returns>
-        [Route("")]
         [Route("Index")]
-        [Route("/")]
-        [HttpGet]       
+        [HttpGet]
+        [Authorize]
         public async Task<IActionResult> Index()
         {
             var jobApplications = await _context.JobApplications.ToListAsync();
@@ -35,14 +35,11 @@ namespace JobApply.Controllers
             foreach(var app in jobApplications)
             {
                 var jobOffer = await _context.JobOffers.FindAsync(app.OfferId);
-                applications.Add(new JobApplicationViewModel()
-                {
-                    OfferId = app.OfferId,
-                    ApplicationId = app.Id,
-                    JobTitle = jobOffer.JobTitle,
-                    CompanyName = jobOffer.CompanyName,
-                    Location = jobOffer.Location
-                });
+                JobApplicationViewModel vm = app;
+                vm.JobTitle = jobOffer.JobTitle;
+                vm.CompanyName = jobOffer.CompanyName;
+                vm.Location = jobOffer.Location;
+                applications.Add(vm);
             }
             return View(applications);
         }
@@ -55,6 +52,7 @@ namespace JobApply.Controllers
         /// 
         [Route("Details/{id}")]
         [HttpGet]
+        [Authorize]
         public async Task<IActionResult> Details(int? id)
         {
             if (id == null)
@@ -115,11 +113,15 @@ namespace JobApply.Controllers
         /// <remarks>Backend model validation.</remarks>
         /// <param name="application">Application form to save</param>
         /// <returns></returns>
-        [Route("ApplyForOffer")]
+        [Route("ApplyForOffer/{id}")]
         [HttpPost]
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> ApplyForOffer([Bind("OfferId,JobTitle,CompanyName,Location,FirstName,LastName,PhoneNumber,EmailAddress,ContactAgreement,CvUrl")] JobApplicationViewModel application)
         {
+            if (!TryValidateModel(application, nameof(JobApplicationViewModel)))
+            {
+                return View(application.OfferId);
+            }
             if (ModelState.IsValid)
             {
                 JobApplication jobApplication = application;
@@ -130,7 +132,7 @@ namespace JobApply.Controllers
             }
             else
             {
-                return View(application);
+                return View(application.OfferId);
             }       
         }
 
@@ -143,6 +145,7 @@ namespace JobApply.Controllers
         [Route("Delete/{id}")]
         [HttpPost, ActionName("Delete")]
         [ValidateAntiForgeryToken]
+        [Authorize]
         public async Task<IActionResult> DeleteConfirmed(int id)
         {
             var jobApplication = await _context.JobApplications.FindAsync(id);
@@ -154,6 +157,28 @@ namespace JobApply.Controllers
         private bool JobApplicationExists(int id)
         {
             return _context.JobApplications.Any(e => e.Id == id);
+        }
+        /// <summary>
+        /// Filter all job application by email.
+        /// </summary>
+        /// <param name="EmailAddress">string which emails shoud cointains</param>
+        /// <returns>Collection of job applications</returns>
+        [HttpGet]
+        [Route("FilterJobApplications/{EmailAddress}")]
+        public IActionResult FilterJobApplications(string EmailAddress)
+        {
+            var model = new List<JobApplicationViewModel>();
+            var applications = _context.JobApplications.Where(a => a.EmailAddress.Contains(EmailAddress)).ToList();
+            foreach (var app in applications)
+            {
+                var jobOffer = _context.JobOffers.Find(app.OfferId);
+                JobApplicationViewModel vm = app;
+                vm.JobTitle = jobOffer.JobTitle;
+                vm.CompanyName = jobOffer.CompanyName;
+                vm.Location = jobOffer.Location;
+                model.Add(vm);
+            }
+            return View("Index", model);
         }
     }
 }
