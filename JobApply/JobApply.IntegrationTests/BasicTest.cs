@@ -1,9 +1,13 @@
 ﻿using Microsoft.AspNetCore.Mvc.Testing;
+using Newtonsoft.Json;
 using System;
 using System.Collections.Generic;
 using System.Text;
 using System.Threading.Tasks;
 using Xunit;
+using JobApply.Models;
+using Microsoft.AspNetCore.Mvc;
+using System.Net.Http;
 
 namespace JobApply.IntegrationTests
 {
@@ -20,7 +24,7 @@ namespace JobApply.IntegrationTests
         [InlineData("/")]
         [InlineData("/JobOffers/Index")]
         [InlineData("/Home/About")]
-        [InlineData("/JobApplications/Index")]
+        [InlineData("/Companies/Index")]
         public async Task Get_EndpointsReturnSuccessAndCorrectContentType(string url)
         {
             // Arrange
@@ -30,9 +34,19 @@ namespace JobApply.IntegrationTests
             var response = await client.GetAsync(url);
 
             // Assert
-            response.EnsureSuccessStatusCode(); // Status Code 200-299
-            Assert.Equal("text/html; charset=utf-8",
-                response.Content.Headers.ContentType.ToString());
+            response.EnsureSuccessStatusCode(); 
+            Assert.Equal("text/html; charset=utf-8", response.Content.Headers.ContentType.ToString());
+        }
+
+        [Fact]
+        public async Task JobOfferDetails_IdNotInDatabase_NotFoundResult()
+        {
+            var url = "/JobOffers/Details/0";
+            var client = _factory.CreateClient();
+
+            var response = await client.GetAsync(url);
+
+            Assert.True(response.StatusCode == System.Net.HttpStatusCode.NotFound);
         }
     }
 }
