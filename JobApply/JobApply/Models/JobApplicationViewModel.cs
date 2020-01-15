@@ -11,10 +11,9 @@ namespace JobApply.Models
     [BindProperties]
     public class JobApplicationViewModel
     {
-        public int ApplicationId { get; set; }
+        public int Id { get; set; }
 
         [Required]
-        [MinLength(5)]
         [Display(Name = "First Name")]
         public string FirstName { get; set; }
 
@@ -23,7 +22,6 @@ namespace JobApply.Models
         public string LastName { get; set; }
 
         [Required]
-        [Phone]
         [Display(Name = "Phone Number")]
         public string PhoneNumber { get; set; }
 
@@ -71,7 +69,7 @@ namespace JobApply.Models
         {
             return new JobApplication
             {
-                Id = vm.ApplicationId,
+                Id = vm.Id,
                 OfferId = vm.OfferId,
                 FirstName = vm.FirstName,
                 LastName = vm.LastName,
@@ -87,7 +85,7 @@ namespace JobApply.Models
         {
             return new JobApplicationViewModel
             {
-                ApplicationId = vm.Id,
+                Id = vm.Id,
                 OfferId = vm.OfferId,
                 FirstName = vm.FirstName,
                 LastName = vm.LastName,
