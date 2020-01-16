@@ -129,7 +129,16 @@ namespace JobApply.Controllers
                 jobApplication.Created = DateTime.Now;
                 _context.Add(jobApplication);
                 await _context.SaveChangesAsync();
-                await SendMail(jobApplication.EmailAddress, jobApplication.FirstName, jobApplication.LastName);
+
+                var msg = new SendGridMessage();
+                msg.SetFrom(new EmailAddress("hrmanagement@jobapply.com", "Job Apply Team"));
+                msg.AddTo(new EmailAddress(jobApplication.EmailAddress, jobApplication.FirstName + " " + jobApplication.LastName));
+                msg.SetSubject("Application sent, confirmation");
+                msg.AddContent(MimeType.Text, "Hi, your application was sent correctly");
+
+                var client = new SendGridClient(apiKey);
+                var resposne = await client.SendEmailAsync(msg);
+
                 if (User.Identity.IsAuthenticated) return RedirectToAction(nameof(Index));
                 else return RedirectToAction("Index", "JobOffers");
             }
@@ -184,17 +193,5 @@ namespace JobApply.Controllers
             return View("Index", model);
         }
 
-        [ApiExplorerSettings(IgnoreApi = true)]
-        public async Task SendMail(string email, string firstName, string lastName)
-        {
-            var msg = new SendGridMessage();
-            msg.SetFrom(new EmailAddress("hrmanagement@hr.com", "HRManagement Team"));
-            msg.AddTo(new EmailAddress(email, firstName + " " + lastName));
-            msg.SetSubject("Application sent, confirmation");
-            msg.AddContent(MimeType.Text, "Hello, your application was sent correctly");
-
-            var client = new SendGridClient(apiKey);
-            var resposne = await client.SendEmailAsync(msg);
-        }
     }
 }
