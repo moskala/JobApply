@@ -91,7 +91,7 @@ namespace JobApply.UITests
         {
             string FirstName = "FirstNameTest";
             string LastName = "LastNameTest";
-            string PhoneNumber = "PhoneNumberTest";
+            string PhoneNumber = "123456789";
             string EmailAddress = "email@test.pl";
             string CvUrl = "my_cv.pdf";
 
