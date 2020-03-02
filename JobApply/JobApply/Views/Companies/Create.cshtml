@@ -1,0 +1,114 @@
+﻿@model JobApply.Models.Company
+
+@{
+    ViewData["Title"] = "Create";
+}
+
+<h2>Create</h2>
+
+<h4>Company</h4>
+<hr />
+<div class="row">
+    <div class="col-md-4">
+        <form asp-action="Create">
+            <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+            <div class="form-group">
+                <label asp-for="Name" class="control-label"></label>
+                <input id="Name" class="form-control" onblur="validateName()" data-bind="value: name" />
+                <span asp-validation-for="Name" class="text-danger"></span>
+                <span id="nameWarning" class="text-danger" style="display: none">Company name is required.</span>
+            </div>
+            <div class="form-group">
+                <label asp-for="City" class="control-label"></label>
+                <input asp-for="City" class="form-control" onblur="validateCity()" data-bind="value: city" />
+                <span asp-validation-for="City" class="text-danger"></span>
+                <span id="cityWarning" class="text-danger" style="display: none">City is required.</span>
+            </div>
+            <div class="form-group">
+                <label asp-for="Country" class="control-label"></label>
+                <input asp-for="Country" class="form-control" onblur="validateCountry()" data-bind="value: country" />
+                <span asp-validation-for="Country" class="text-danger"></span>
+                <span id="countryWarning" class="text-danger" style="display: none">Country is required.</span>
+            </div>
+            <div class="form-group">
+                <label asp-for="ContactEmail" class="control-label"></label>
+                <input asp-for="ContactEmail" class="form-control" onblur="validateEmail()" data-bind="value: email" />
+                <span asp-validation-for="ContactEmail" class="text-danger"></span>
+                <span id="emailWarning" class="text-danger" style="display: none">Contact email is required.</span>
+                <span id="emailValidation" class="text-danger" style="display: none">Wrong email format.</span>
+            </div>
+            <div class="form-group">
+                <label asp-for="FoundationDate" class="control-label"></label>
+                <input id="FoundationDate" class="form-control" onblur="validateDate()" placeholder="yyyy-mm-dd" data-bind="value: date" />
+                <span asp-validation-for="FoundationDate" class="text-danger"></span>
+                <span id="dateWarning" class="text-danger" style="display: none">Foundation date is required.</span>
+                <span id="dateValidation" class="text-danger" style="display: none">Invalid form of date. Use: yyyy-mm-dd.</span>
+            </div>
+            <div class="form-group">
+                <button type="submit" , value="Submit" class="btn btn-primary" id="submit">Submit</button>
+            </div>
+        </form>
+    </div>
+    <div class="col-md-2">
+
+    </div>
+    <div class="col-md-6">
+        <h3>Checkout your new company view:</h3>
+        <div>
+            <dl class="dl-horizontal">
+                <dt>
+                    @Html.DisplayNameFor(model => model.Name)
+                </dt>
+                <dd>
+                    <span data-bind="text: name"></span>
+                </dd>
+                <dt>
+                    @Html.DisplayNameFor(model => model.City)
+                </dt>
+                <dd>
+                    <span data-bind="text: city"></span>
+                </dd>
+                <dt>
+                    @Html.DisplayNameFor(model => model.Country)
+                </dt>
+                <dd>
+                    <span data-bind="text: country"></span>
+                </dd>
+                <dt>
+                    @Html.DisplayNameFor(model => model.ContactEmail)
+                </dt>
+                <dd>
+                    <span data-bind="text: email"></span>
+                </dd>
+                <dt>
+                    @Html.DisplayNameFor(model => model.FoundationDate)
+                </dt>
+                <dd>
+                    <span data-bind="text: date"></span>
+                </dd>
+            </dl>
+        </div>
+    </div>
+</div>
+
+<div>
+    <a asp-action="Index">Back to List</a>
+</div>
+
+
+@section Scripts{
+    <script src="@Url.Content("~/Scripts/postCompany.js")"></script>
+    <script type='text/javascript'>
+        window.onload = function init() {
+            var ViewModel = function (name, city, country, email, date) {
+                this.name = ko.observable(name);
+                this.city = ko.observable(city);
+                this.country = ko.observable(country);
+                this.email = ko.observable(email);
+                this.date = ko.observable(date);
+            };
+            ko.applyBindings(new ViewModel("", "", "", "", ""));
+        }
+    </script>
+}
+

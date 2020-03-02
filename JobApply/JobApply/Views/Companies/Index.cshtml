@@ -1,0 +1,70 @@
+﻿@model IEnumerable<JobApply.Models.Company>
+
+@{
+    ViewData["Title"] = "Index";
+}
+
+<h2>List of companies</h2>
+@if (User.Identity.IsAuthenticated)
+{
+    <p>
+        <a asp-action="Create">Create New</a>
+    </p>
+}
+
+<table class="table">
+    <thead>
+        <tr>
+            <th>
+                @Html.DisplayNameFor(model => model.Name)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.City)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Country)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.ContactEmail)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.FoundationDate)
+            </th>
+            <th></th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var item in Model)
+        {
+            <tr>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Name)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.City)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Country)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.ContactEmail)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.FoundationDate)
+                </td>
+                <td>
+                    <a asp-action="Details" asp-route-id="@item.Id">Details</a>          
+                    @if (User.Identity.IsAuthenticated)
+                    {
+                        <label> | </label>
+                        <a asp-action="Edit" asp-route-id="@item.Id">Edit</a>
+                        <label> | </label>
+                        <a asp-action="Delete" asp-route-id="@item.Id">Delete</a>
+
+                    }
+
+                </td>
+            </tr>
+        }
+    </tbody>
+</table>

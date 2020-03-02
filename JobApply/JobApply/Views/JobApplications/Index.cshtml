@@ -1,0 +1,93 @@
+﻿@model IEnumerable<JobApply.Models.JobApplicationViewModel>
+
+@{
+    ViewData["Title"] = "Applications";
+}
+
+<div class="row mb-2">
+    <div class="d-flex align-items-center py-2 col-md-5">
+        <h2 class="font-weight-bold mb-0">
+            Job Applications list:
+            <span class="badge badge-secondary ml-2">
+                @Model.Count()
+            </span>
+        </h2>
+    </div>
+    <div class="col-md-5">
+        <form class="justify-content-center align-items-center ">
+            <div class="input-group">
+                <div class="input-group-prepend" id="search-addon">
+                    <span class="input-group-text"><i class="fa fa-search" aria-hidden="true"></i></span>
+                </div>
+                <input id="searchByEmail" type="text" class="form-control" placeholder="Search by email..." aria-describedby="search-addon">
+            </div>
+        </form>
+        <a id="searchArea" href="/JobApplications/Index">Find </a>
+    </div>
+</div>
+<table class="table">
+    <thead>
+        <tr>
+            <th>
+                @Html.DisplayNameFor(model => model.JobTitle)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.CompanyName)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Location)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.EmailAddress)
+            </th>
+            <th>
+                Application details
+            </th>
+            <th>
+                Job offer details
+            </th>
+            <th></th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var item in Model)
+        {
+        <tr>
+            <td>
+                @Html.DisplayFor(modelItem => item.JobTitle)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.CompanyName)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Location)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.EmailAddress)
+            </td>
+            <td>
+                @Html.ActionLink("Details", "Details", "JobApplications", new { id = item.Id })
+            </td>
+            <td>
+                @Html.ActionLink("Go to offer", "Details", "JobOffers", new { id = item.OfferId })
+            </td>
+        </tr>
+        }
+    </tbody>
+</table>
+
+@section Scripts{
+    <script>
+        $("#searchByEmail").change(function () {
+            let email = $("#searchByEmail").val();
+            var a = document.getElementById("searchArea");
+            if (email == null || email == undefined || email == '') {
+                a.href = "/JobApplications/Index";
+                return;
+            }
+            //var link = document.createElement('a');
+            var link = "/JobApplications/FilterJobApplications/" + email;
+            a.href = link;
+        });
+    </script>
+}
