@@ -3,7 +3,7 @@ Job Apply is web application in .NET Core 2.1. It was developed over the course 
 The main goal was to create web application where users could post new job offers or apply for existing ones. 
 
 ## Project overview
-- MVC model
+- MVC pattern
 - data management by Entity Framework 
 - use of Razor Pages, Bootstrap, AJAX 
 - client and server data validation
