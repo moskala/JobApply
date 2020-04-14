@@ -1,20 +1,12 @@
-# Introduction 
-TODO: Give a short introduction of your project. Let this section explain the objectives or the motivation behind this project. 
+# Job Apply
+Job Apply is web application in .NET Core 2.1. It was developed over the course of the 2019/20 winter semester.
+The main goal was to create web application where users could post new job offers or apply for existing ones. 
 
-# Getting Started
-TODO: Guide users through getting your code up and running on their own system. In this section you can talk about:
-1.	Installation process
-2.	Software dependencies
-3.	Latest releases
-4.	API references
-
-# Build and Test
-TODO: Describe and show how to build your code and run the tests. 
-
-# Contribute
-TODO: Explain how other users and developers can contribute to make your code better. 
-
-If you want to learn more about creating good readme files then refer the following [guidelines](https://docs.microsoft.com/en-us/azure/devops/repos/git/create-a-readme?view=azure-devops). You can also seek inspiration from the below readme files:
-- [ASP.NET Core](https://github.com/aspnet/Home)
-- [Visual Studio Code](https://github.com/Microsoft/vscode)
-- [Chakra Core](https://github.com/Microsoft/ChakraCore)
+## Project overview
+- MVC model
+- data management by Entity Framework 
+- use of Razor Pages, Bootstrap, AJAX 
+- client and server data validation
+- sign up and log in possibility (using Azure B2C Directory)
+- sending e-mail notifications (using SendGrid)
+- unit tests (MSTest), UI tests(Selenium)
